@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوسيل للشقق المخدومة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- قسم الفيديو والهيدر -->
+    <header class="hero-section">
+        <video autoplay muted loop playsinline class="bg-video" id="main-bg-video"></video>
+        <div class="top-nav">
+            <button class="btn-book">احجز الآن 📅</button>
+            <div class="logo">
+                <img id="brand-logo" src="" alt="لوسيل للشقق المخدومة">
+            </div>
+        </div>
+        <div class="hero-content">
+            <p id="hero-subtitle-text"></p>
+            <h1 id="hero-title-text"></h1>
+            <div class="scroll-down">↓</div>
+        </div>
+    </header>
+
+    <!-- قسم من نحن -->
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-images">
+                <div class="media-slider">
+                    <div class="slider-track" id="about-track"></div>
+                    <button class="slider-arrow right-arrow" onclick="prevAboutSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="slider-arrow left-arrow" onclick="nextAboutSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>في أعالي<br>جبال الطائف</h2>
+                <p>حيث يلامس الضباب قمم الجبال وتتناثر نسمات الهواء العليل<br>أجمل وأشهر مصايف المملكة العربية السعودية<br>يقع مشروع لوسيل للشقق المخدومة</p>
+                <button class="btn-primary">تعرف على المزيد!</button>
+            </div>
+        </div>
+        <div class="about-features">
+            <div class="feature-item">
+                <i class="fa-solid fa-key"></i><span>ضيافة<br>فاخرة</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-umbrella-beach"></i><span>طبيعة ساحرة &<br>تنوع في الخدمات</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-spa"></i><span>التركيز على<br>راحة ضيوفنا</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأدوار والغرف -->
+    <section id="floors-section" class="floors-rooms-section">
+        <div id="floors-grid" class="floors-grid"></div>
+        <div class="rooms-container-box">
+            <div class="floor-header">
+                <div class="floor-title-info">
+                    <h2 id="current-floor-title">الطابق الثاني - المدرجات المتوسطية</h2>
+                    <p id="current-floor-count">2 غرف متوفرة</p>
+                </div>
+            </div>
+            <div class="rooms-white-bg">
+                <div id="rooms-grid" class="rooms-grid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر (تواصل معنا) -->
+    <footer class="contact-footer">
+        <h3>تواصل معنا</h3>
+        <div class="footer-container">
+            <!-- اليمين: السوشيال ميديا -->
+            <div class="social-icons">
+                <a href="#" id="tiktok-link" target="_blank" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" id="instagram-link" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" id="whatsapp-link" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+
+            <!-- الوسط: رقم التليفون -->
+            <div class="phone-center">
+                <a href="#" id="phone-link" class="phone-btn">
+                    <span id="phone-text" dir="ltr"></span>
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+            </div>
+
+            <!-- اليسار: الموقع الجغرافي -->
+            <div class="location-group">
+                <div class="location-text-container">
+                    <span id="location-text"></span>
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <a href="#" id="map-link" target="_blank" class="circle-map-btn">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>للوصول الى</span>
+                </a>
+            </div>
+        </div>
+        <p class="copyright" id="copyright-text"></p>
+    </footer>
+
+    <!-- النافذة المنبثقة (صفحة الغرفة) -->
+    <div id="room-modal" class="room-modal">
+        <button class="floating-back-btn" onclick="closeRoomModal()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
+        <div class="modal-content">
+            <div class="modal-details">
+                <span class="room-badge" id="modal-room-id">غرفة 302</span>
+                <p class="modal-floor-name" id="modal-floor-name">الطابق 03 - الطابق الثاني</p>
+                <h2 id="modal-title" class="modal-room-title">غرفة كوستال التنفيذية</h2>
+                <div class="modal-price-box">
+                    <h3 id="modal-price">night / $360</h3>
+                    <p>ليلة واحدة مشمولة</p>
+                </div>
+                <button class="btn-book-direct">احجز هذه الغرفة الآن عبر الموقع المباشر ↗</button>
+                <div class="room-stats-grid">
+                    <div class="stat-item"><span>المساحة الإجمالية</span><strong id="modal-area">M² 45</strong></div>
+                    <div class="stat-item"><span>سعة النزلاء</span><strong id="modal-capacity">2 نزلاء 👥</strong></div>
+                    <div class="stat-item"><span>نوع السرير</span><strong id="modal-bed">سرير ملكي كينغ 🛏️</strong></div>
+                    <div class="stat-item"><span>نوع الإطلالة</span><strong id="modal-view">إطلالة على البحر 🌅</strong></div>
+                </div>
+                <div class="modal-desc-section">
+                    <h3>عن الغرفة والتصميم المعماري</h3>
+                    <p id="modal-desc">الوصف هنا</p>
+                    <h3>المميزات والتجهيزات الفاخرة المشمولة</h3>
+                    <ul id="modal-features" class="modal-features-list"></ul>
+                </div>
+            </div>
+            <div class="modal-gallery">
+                <div class="media-slider modal-slider-height">
+                    <div class="slider-track" id="gallery-track"></div>
+                    <button class="slider-arrow right-arrow" onclick="prevImage()"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="slider-arrow left-arrow" onclick="nextImage()"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="gallery-counter-badge" id="gallery-counter">1 / 3</div>
+                </div>
+                <div class="thumbnails-container" id="modal-thumbnails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
