@@ -74,19 +74,31 @@ function renderHeaderAndFooter() {
     const subtitleElement = document.getElementById('hero-subtitle-text');
     if (subtitleElement) subtitleElement.textContent = siteSettings.heroSubtitle[currentLang];
 
-    // وضع الصورة البديلة وفيديو اليوتيوب
-    const youtubeWrapper = document.querySelector('.youtube-bg-wrapper');
-    const youtubeIframe = document.getElementById('main-bg-youtube');
-    
-    // الصورة البديلة (Fallback)
-    if (youtubeWrapper && siteSettings.heroImage) {
-        youtubeWrapper.style.backgroundImage = `url('${siteSettings.heroImage}')`;
-    }
+    // =====================================
+    // النظام الموحد للوسائط في الهيدر
+    // =====================================
+    const heroContainer = document.getElementById('hero-media-container');
+    if (heroContainer && siteSettings.heroMedia) {
+        const media = siteSettings.heroMedia;
+        let htmlContent = '';
+        
+        // تطبيق الصورة البديلة فورا لتجنب الشاشة السوداء
+        if (media.fallbackImage) {
+            heroContainer.style.backgroundImage = `url('${media.fallbackImage}')`;
+        }
 
-    if (youtubeIframe && siteSettings.heroYoutubeId) {
-        const vidId = siteSettings.heroYoutubeId;
-        const origin = window.location.origin !== "null" ? window.location.origin : "https://lusailresortsa.com";
-        youtubeIframe.src = `https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&loop=1&playlist=${vidId}&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&fs=0&modestbranding=1&iv_load_policy=3&origin=${origin}`;
+        if (media.type === 'youtube') {
+            const origin = window.location.origin !== "null" ? window.location.origin : "https://lusailresortsa.com";
+            htmlContent = `<div class="youtube-bg-wrapper">
+                               <iframe class="youtube-bg" src="https://www.youtube.com/embed/${media.src}?autoplay=1&mute=1&loop=1&playlist=${media.src}&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&fs=0&modestbranding=1&iv_load_policy=3&origin=${origin}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                           </div>`;
+        } else if (media.type === 'localVideo') {
+            htmlContent = `<video autoplay muted loop playsinline class="bg-video"><source src="${media.src}" type="video/mp4"></video>`;
+        } else if (media.type === 'image') {
+            htmlContent = `<img src="${media.src}" class="bg-image-cover" alt="Hero Background">`;
+        }
+        
+        heroContainer.innerHTML = htmlContent;
     }
 
     const bookingBtn = document.getElementById('btn-book-direct');
@@ -172,7 +184,10 @@ function openLightbox(mediaArray, startIndex) {
 function renderLightbox() {
     const content = document.getElementById('lightbox-content');
     const m = lightboxMedia[lightboxIndex];
-    if (m.type === 'video') {
+    if (m.type === 'youtube') {
+        // تشغيل اليوتيوب بصوت وبتحكم كامل للزائر
+        content.innerHTML = `<iframe src="https://www.youtube.com/embed/${m.src}?autoplay=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    } else if (m.type === 'localVideo') {
         content.innerHTML = `<video src="${m.src}" controls autoplay playsinline></video>`;
     } else {
         content.innerHTML = `<img src="${m.src}">`;
@@ -251,16 +266,28 @@ function renderModalGallery(roomTitleAlt) {
     const thumbs = document.getElementById('modal-thumbnails');
 
     track.innerHTML = currentRoomMedia.map((m, idx) => {
-        let tag = m.type === 'video' 
-            ? `<video src="${m.src}" autoplay muted loop playsinline style="pointer-events:none;"></video>` 
-            : `<img src="${m.src}" alt="${roomTitleAlt}">`;
+        let tag = '';
+        if (m.type === 'youtube') {
+            tag = `<iframe src="https://www.youtube.com/embed/${m.src}?controls=0&mute=1&autoplay=1&loop=1&playlist=${m.src}" frameborder="0" allowfullscreen></iframe>`;
+        } else if (m.type === 'localVideo') {
+            tag = `<video src="${m.src}" autoplay muted loop playsinline></video>`;
+        } else {
+            tag = `<img src="${m.src}" alt="${roomTitleAlt}">`;
+        }
         return `<div class="slide-item ${idx === 0 ? 'active' : ''}" onclick="openLightbox(currentRoomMedia, ${idx})">${tag}</div>`;
     }).join('');
 
     thumbs.innerHTML = currentRoomMedia.map((m, idx) => {
-        let inner = m.type === 'video' 
-            ? `<i class="fa-solid fa-play video-icon-overlay"></i><video src="${m.src}"></video>` 
-            : `<img src="${m.src}" alt="Thumbnail">`;
+        let inner = '';
+        if (m.type === 'youtube') {
+            // سحب صورة مصغرة أوتوماتيكية من اليوتيوب
+            let thumbUrl = `https://img.youtube.com/vi/${m.src}/mqdefault.jpg`;
+            inner = `<i class="fa-brands fa-youtube video-icon-overlay" style="color:#ff0000;"></i><img src="${thumbUrl}">`;
+        } else if (m.type === 'localVideo') {
+            inner = `<i class="fa-solid fa-play video-icon-overlay"></i><video src="${m.src}"></video>`;
+        } else {
+            inner = `<img src="${m.src}" alt="Thumbnail">`;
+        }
         return `<div class="thumbnail-item ${idx === 0 ? 'active' : ''}" onclick="goToImage(${idx})">${inner}</div>`;
     }).join('');
 
@@ -299,7 +326,13 @@ function closeRoomModalUI() {
 
     const track = document.getElementById('gallery-track');
     if(track) {
+        // إيقاف الفيديوهات العادية
         track.querySelectorAll('video').forEach(vid => vid.pause());
+        // إعادة تعيين رابط اليوتيوب لإيقافه
+        track.querySelectorAll('iframe').forEach(iframe => {
+            const src = iframe.src;
+            iframe.src = src; 
+        });
     }
     
     isModalOpen = false;
@@ -321,18 +354,29 @@ function initAboutSlider() {
     const thumbs = document.getElementById('about-thumbnails');
     if (!track || typeof siteSettings === 'undefined' || !siteSettings.aboutMedia) return;
 
-    track.innerHTML = siteSettings.aboutMedia.map((media, idx) => {
-        let tag = media.type === 'video'
-            ? `<video src="${media.src}" autoplay muted loop playsinline style="pointer-events:none;"></video>`
-            : `<img src="${media.src}" alt="About Resort">`;
+    track.innerHTML = siteSettings.aboutMedia.map((m, idx) => {
+        let tag = '';
+        if (m.type === 'youtube') {
+            tag = `<iframe src="https://www.youtube.com/embed/${m.src}?controls=0&mute=1&autoplay=1&loop=1&playlist=${m.src}" frameborder="0" allowfullscreen></iframe>`;
+        } else if (m.type === 'localVideo') {
+            tag = `<video src="${m.src}" autoplay muted loop playsinline></video>`;
+        } else {
+            tag = `<img src="${m.src}" alt="About Resort">`;
+        }
         return `<div class="slide-item ${idx === 0 ? 'active' : ''}" onclick="openLightbox(siteSettings.aboutMedia, ${idx})">${tag}</div>`;
     }).join('');
 
     if (thumbs) {
-        thumbs.innerHTML = siteSettings.aboutMedia.map((media, idx) => {
-            let inner = media.type === 'video' 
-                ? `<i class="fa-solid fa-play video-icon-overlay"></i><video src="${media.src}"></video>` 
-                : `<img src="${media.src}" alt="Thumbnail">`;
+        thumbs.innerHTML = siteSettings.aboutMedia.map((m, idx) => {
+            let inner = '';
+            if (m.type === 'youtube') {
+                let thumbUrl = `https://img.youtube.com/vi/${m.src}/mqdefault.jpg`;
+                inner = `<i class="fa-brands fa-youtube video-icon-overlay" style="color:#ff0000;"></i><img src="${thumbUrl}">`;
+            } else if (m.type === 'localVideo') {
+                inner = `<i class="fa-solid fa-play video-icon-overlay"></i><video src="${m.src}"></video>`;
+            } else {
+                inner = `<img src="${m.src}" alt="Thumbnail">`;
+            }
             return `<div class="thumbnail-item ${idx === 0 ? 'active' : ''}" onclick="goToAboutImage(${idx})">${inner}</div>`;
         }).join('');
     }

@@ -56,10 +56,15 @@ const siteSettings = {
     heroSubtitle: { ar: "وجهتك المثلى في أجمل مصايف المملكة", en: "Your ultimate destination in the Kingdom's finest resorts" },
     bookingLink: "https://www.booking.com", 
     
-    // الصورة البديلة الجديدة
-    heroImage: "https://lusailresortsa.com/assets/img/hero/home3/bg.jpg", 
-    // معرف يوتيوب
-    heroYoutubeId: "QjWOcP6sWWM", 
+    // ==========================================
+    // إعدادات الخلفية الرئيسية (بإمكانك التغيير بسهولة)
+    // الأنواع المتاحة: "youtube" أو "localVideo" أو "image"
+    // ==========================================
+    heroMedia: {
+        type: "image", // جرب تغييرها إلى "image" أو "localVideo"
+        src: "assets/2.jpg", // ضع ID اليوتيوب، أو رابط الصورة/الفيديو حسب النوع المختار
+        fallbackImage: "https://lusailresortsa.com/assets/img/hero/home3/bg.jpg" // الصورة التي تظهر قبل التحميل
+    },
     
     phoneNumber: "0509187294",
     whatsappLink: "https://wa.me/966509187294",
@@ -71,7 +76,7 @@ const siteSettings = {
 
     aboutMedia: [
         { type: "image", src: "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=600&auto=format&fit=crop" },
-        { type: "video", src: "https://res.cloudinary.com/hpgg1hvh/video/upload/v1787252639/pop.mp4" } 
+        { type: "localVideo", src: "https://res.cloudinary.com/hpgg1hvh/video/upload/v1787252639/pop.mp4" } 
     ]
 };
 
@@ -105,8 +110,10 @@ const roomsData = [
             en: ["Private terrace", "Large living room", "Fully equipped large kitchen", "2 Bathrooms", "Microwave & Refrigerator", "Dining table", "Qibla direction"]
         },
         media: [
+            // مثال لإضافة فيديو يوتيوب للغرفة!
+            { type: "youtube", src: "QjWOcP6sWWM" },
             { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" },
-            { type: "video", src: "https://res.cloudinary.com/hpgg1hvh/video/upload/v1787252639/pop.mp4" }
+            { type: "localVideo", src: "https://res.cloudinary.com/hpgg1hvh/video/upload/v1787252639/pop.mp4" }
         ]
     },
     {

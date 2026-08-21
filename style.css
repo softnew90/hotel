@@ -11,48 +11,19 @@ body { background-color: var(--bg-color); color: var(--navy-blue); overflow-x: h
 body[dir="rtl"] { font-family: 'Tajawal', sans-serif; }
 body[dir="ltr"] { font-family: 'Poppins', sans-serif; }
 
-/* ================= الهيدر وفيديو يوتيوب ================= */
+/* ================= الهيدر وأنواع الوسائط ================= */
 .hero-section { height: 80vh; position: relative; display: flex; flex-direction: column; overflow: hidden; background-color: #111; z-index: 1; }
 
-.youtube-bg-wrapper { 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    z-index: -1; 
-    overflow: hidden; 
-    background-color: #111;
-    background-size: cover; 
-    background-position: center; 
-}
+.hero-media-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-size: cover; background-position: center; background-color: #111;}
 
-/* طبقة تظليل وحماية لمنع التفاعل مع الفيديو */
-.youtube-bg-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
-    background: rgba(0,0,0,0.5); /* درجة التظليل */
-    z-index: 1;
-}
+/* فيديو اليوتيوب بالخلفية */
+.youtube-bg-wrapper { width: 100%; height: 100%; position: relative; overflow: hidden; filter: brightness(0.5); pointer-events: none; }
+.youtube-bg-wrapper::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1; }
+.youtube-bg { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%) scale(1.15); border: none; z-index: 0; }
 
-.youtube-bg { 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    width: 100vw; 
-    height: 56.25vw; 
-    min-height: 100vh; 
-    min-width: 177.77vh; 
-    /* التكبير لـ 1.15 لإخفاء حواف يوتيوب وأيقونات التشغيل */
-    transform: translate(-50%, -50%) scale(1.15); 
-    border: none; 
-    pointer-events: none; /* يمنع الضغط أو إيقاف الفيديو */
-    z-index: 0;
-}
+/* الصورة أو الفيديو العادي بالخلفية */
+.bg-video, .bg-image-cover { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+
 
 .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); color: var(--white); z-index: 2; position: relative;}
 .logo img { object-fit: contain; transition: height 0.3s ease; }
@@ -80,10 +51,11 @@ body[dir="ltr"] { font-family: 'Poppins', sans-serif; }
 /* ================= السلايدر ================= */
 .media-slider { width: 100%; height: 400px; position: relative; border-radius: 15px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 .modal-slider-height { height: 450px; margin-bottom: 15px; }
-.slider-track { display: block; position: relative; width: 100%; height: 100%; }
-.slide-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out; pointer-events: none; cursor: pointer; }
-.slide-item.active { opacity: 1; pointer-events: auto; z-index: 2; }
-.slide-item img, .slide-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.slider-track { display: block; position: relative; width: 100%; height: 100%; background: #000; }
+.slide-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out; cursor: pointer; }
+.slide-item.active { opacity: 1; z-index: 2; }
+.slide-item img, .slide-item video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none;}
+.slide-item iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
 
 .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(28, 53, 69, 0.6); color: var(--white); border: 2px solid transparent; width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s; z-index: 10; backdrop-filter: blur(4px); }
 .slider-arrow:hover { background: var(--navy-blue); border-color: var(--white); }
@@ -175,16 +147,17 @@ body[dir="ltr"] .modal-features-list li::before { content: "✔️ "; position: 
 
 .thumbnails-container { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scroll-behavior: smooth; }
 .thumbnails-container::-webkit-scrollbar { display: none; }
-.thumbnail-item { position: relative; width: 100px; height: 70px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.3s; flex-shrink: 0; }
+.thumbnail-item { position: relative; width: 100px; height: 70px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.3s; flex-shrink: 0; background: #000;}
 .thumbnail-item.active, .thumbnail-item:hover { opacity: 1; border-color: var(--navy-blue); }
 .thumbnail-item img, .thumbnail-item video { width: 100%; height: 100%; object-fit: cover; }
-.video-icon-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.2rem; text-shadow: 0 2px 5px rgba(0,0,0,0.6); pointer-events: none; }
+.video-icon-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.2rem; text-shadow: 0 2px 5px rgba(0,0,0,0.6); pointer-events: none; z-index: 2; }
 
 /* ================= ملء الشاشة (Lightbox) ================= */
 .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
 .lightbox.active { display: flex; }
 .lightbox-content { width: 90%; height: 85%; display: flex; justify-content: center; align-items: center; position: relative; }
 .lightbox-content img, .lightbox-content video { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+.lightbox-content iframe { width: 100%; height: 100%; aspect-ratio: 16/9; max-height: 80vh; max-width: 1200px; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
 .lightbox-close { position: absolute; top: 20px; right: 30px; background: transparent; color: white; border: none; font-size: 2.5rem; cursor: pointer; z-index: 10000; transition: 0.3s; }
 .lightbox-close:hover { transform: scale(1.1); color: #ccc; }
 .lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 10000; transition: 0.3s; backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; }
