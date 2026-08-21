@@ -1,19 +1,106 @@
-// 1. تحديد الطابق الافتراضي ليكون الأول (بدلاً من الثالث)
-let activeFloorId = floorsData[0].id; 
+// إدارة اللغة
+let currentLang = localStorage.getItem('siteLang') || 'ar';
+let activeFloorId = ""; 
 let currentRoomMedia = [];
 let currentGalleryIndex = 0;
 let aboutSlideInterval;
 let currentAboutIndex = 0;
 
+// إعدادات النافذة المنبثقة للصور (Lightbox)
+let lightboxMedia = [];
+let lightboxIndex = 0;
+let touchStartX = 0;
+let touchEndX = 0;
+
+// تطبيق اللغة على الواجهة
+function applyLanguage() {
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    
+    const t = uiTranslations[currentLang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerHTML = t[key];
+    });
+
+    const backIcon = document.getElementById('back-icon');
+    if (backIcon) {
+        backIcon.className = currentLang === 'ar' ? 'fa-solid fa-arrow-right' : 'fa-solid fa-arrow-left';
+    }
+
+    renderHeaderAndFooter();
+    
+    if(floorsData && floorsData.length > 0) {
+        if(!activeFloorId) activeFloorId = floorsData[0].id;
+        renderFloors();
+        renderRooms();
+    }
+}
+
+// تبديل اللغة
+document.getElementById('lang-toggle').addEventListener('click', () => {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    localStorage.setItem('siteLang', currentLang);
+    applyLanguage();
+});
+
+// زر العودة للأعلى
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        scrollTopBtn.style.display = 'flex';
+    } else {
+        scrollTopBtn.style.display = 'none';
+    }
+});
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+function renderHeaderAndFooter() {
+    if (typeof siteSettings === 'undefined') return;
+
+    const logoElement = document.getElementById('brand-logo');
+    if (logoElement) {
+        logoElement.src = siteSettings.logo;
+        logoElement.style.height = siteSettings.logoHeight; 
+    }
+
+    const titleElement = document.getElementById('hero-title-text');
+    if (titleElement) titleElement.textContent = siteSettings.heroTitle[currentLang];
+
+    const subtitleElement = document.getElementById('hero-subtitle-text');
+    if (subtitleElement) subtitleElement.textContent = siteSettings.heroSubtitle[currentLang];
+
+    const mainVideo = document.getElementById('main-bg-video');
+    if(mainVideo && siteSettings.heroVideo) {
+        mainVideo.innerHTML = `<source src="${siteSettings.heroVideo}" type="video/mp4">`;
+        if (siteSettings.heroPoster) mainVideo.setAttribute('poster', siteSettings.heroPoster);
+        mainVideo.load();
+    }
+
+    const bookingBtn = document.getElementById('btn-book-direct');
+    if (bookingBtn) bookingBtn.onclick = () => window.open(siteSettings.bookingLink, '_blank');
+
+    document.getElementById('phone-text').textContent = siteSettings.phoneNumber;
+    document.getElementById('phone-link').href = `tel:${siteSettings.phoneNumber}`;
+    document.getElementById('whatsapp-link').href = siteSettings.whatsappLink;
+    document.getElementById('instagram-link').href = siteSettings.instagramLink;
+    document.getElementById('tiktok-link').href = siteSettings.tiktokLink;
+    document.getElementById('location-text').textContent = siteSettings.locationText[currentLang];
+    document.getElementById('map-link').href = siteSettings.mapLink;
+    document.getElementById('copyright-text').textContent = siteSettings.copyrightText[currentLang];
+}
+
 function renderFloors() {
     const grid = document.getElementById('floors-grid');
+    if(!grid) return;
     grid.innerHTML = '';
     floorsData.forEach(floor => {
         const isActive = floor.id === activeFloorId ? 'active' : '';
         grid.innerHTML += `
             <div class="floor-circle ${isActive}" onclick="selectFloor('${floor.id}')">
-                <span class="f-num">${floor.number}</span>
-                <span class="f-name">${floor.name}</span>
+                <span class="f-name">${floor.name[currentLang]}</span>
             </div>
         `;
     });
@@ -21,29 +108,32 @@ function renderFloors() {
 
 function renderRooms() {
     const grid = document.getElementById('rooms-grid');
+    if(!grid) return;
     grid.innerHTML = '';
+    
     const floorRooms = roomsData.filter(room => room.floorId === activeFloorId);
     const currentFloor = floorsData.find(f => f.id === activeFloorId);
+    const t = uiTranslations[currentLang];
     
-    document.getElementById('current-floor-title').textContent = currentFloor.name;
-    document.getElementById('current-floor-count').textContent = `${floorRooms.length} غرف متوفرة`;
+    document.getElementById('current-floor-title').textContent = currentFloor.name[currentLang];
+    document.getElementById('current-floor-count').textContent = `${floorRooms.length} ${t.availableRooms}`;
 
     floorRooms.forEach(room => {
+        const viewText = room.view[currentLang].length > 25 ? room.view[currentLang].substring(0, 25) + '...' : room.view[currentLang];
         grid.innerHTML += `
             <div class="room-card" onclick="openRoomModal('${room.roomId}')">
                 <div class="card-head">
-                    <span class="r-id">غرفة ${room.roomId}</span>
-                    <span class="r-price">${room.price}</span>
+                    <span class="r-id">${t.roomText} ${room.roomId}</span>
                 </div>
-                <h3>${room.title}</h3>
+                <h3>${room.title[currentLang]}</h3>
                 <div class="r-info-grid">
-                    <div class="info-item"><span>👥</span> ${room.capacity}</div>
-                    <div class="info-item"><span>🛏️</span> ${room.bed}</div>
-                    <div class="info-item"><span>🌅</span> ${room.view.substring(0, 15)}...</div>
+                    <div class="info-item"><span>👥</span> ${room.capacity[currentLang]}</div>
+                    <div class="info-item"><span>🛏️</span> ${room.bed[currentLang]}</div>
+                    <div class="info-item"><span>🌅</span> ${viewText}</div>
                     <div class="info-item"><span>📐</span> ${room.area}</div>
                 </div>
                 <div class="card-footer">
-                    <span class="view-more">عرض التفاصيل والصور ←</span>
+                    <span class="view-more">${t.viewMore} ${currentLang === 'ar' ? '←' : '→'}</span>
                 </div>
             </div>
         `;
@@ -56,49 +146,100 @@ function selectFloor(floorId) {
     renderRooms();
 }
 
+// ================= دوال الـ Lightbox (ملء الشاشة) =================
+function openLightbox(mediaArray, startIndex) {
+    lightboxMedia = mediaArray;
+    lightboxIndex = startIndex;
+    renderLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden'; 
+}
+
+function renderLightbox() {
+    const content = document.getElementById('lightbox-content');
+    const m = lightboxMedia[lightboxIndex];
+    if (m.type === 'video') {
+        content.innerHTML = `<video src="${m.src}" controls autoplay playsinline></video>`;
+    } else {
+        content.innerHTML = `<img src="${m.src}">`;
+    }
+}
+
+function nextLightbox() {
+    lightboxIndex = (lightboxIndex === lightboxMedia.length - 1) ? 0 : lightboxIndex + 1;
+    renderLightbox();
+}
+
+function prevLightbox() {
+    lightboxIndex = (lightboxIndex === 0) ? lightboxMedia.length - 1 : lightboxIndex - 1;
+    renderLightbox();
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.getElementById('lightbox-content').innerHTML = '';
+    // إعادة التمرير للصفحة فقط إذا لم تكن نافذة الغرفة مفتوحة
+    if (!document.getElementById('room-modal').classList.contains('active')) {
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function handleLightboxSwipe() {
+    const threshold = 50;
+    if (touchEndX < touchStartX - threshold) {
+        currentLang === 'ar' ? prevLightbox() : nextLightbox();
+    }
+    if (touchEndX > touchStartX + threshold) {
+        currentLang === 'ar' ? nextLightbox() : prevLightbox();
+    }
+}
+
+// ================= نافذة الغرف المنبثقة والسلايدر =================
 function openRoomModal(roomId) {
     const room = roomsData.find(r => r.roomId === roomId);
-    const floor = floorsData.find(f => f.id === room.floorId);
     if(!room) return;
+    const floor = floorsData.find(f => f.id === room.floorId);
+    const t = uiTranslations[currentLang];
     
-    document.getElementById('modal-room-id').textContent = `غرفة ${room.roomId}`;
-    document.getElementById('modal-floor-name').textContent = floor.name;
-    document.getElementById('modal-title').textContent = room.title;
-    document.getElementById('modal-price').textContent = room.price;
+    document.getElementById('modal-room-id').textContent = `${t.roomText} ${room.roomId}`;
+    document.getElementById('modal-floor-name').textContent = floor.name[currentLang];
+    document.getElementById('modal-title').textContent = room.title[currentLang];
     document.getElementById('modal-area').textContent = room.area;
-    document.getElementById('modal-capacity').textContent = room.capacity;
-    document.getElementById('modal-bed').textContent = room.bed;
-    document.getElementById('modal-view').textContent = room.view;
-    document.getElementById('modal-desc').textContent = room.desc;
+    document.getElementById('modal-capacity').textContent = room.capacity[currentLang];
+    document.getElementById('modal-bed').textContent = room.bed[currentLang];
+    document.getElementById('modal-view').textContent = room.view[currentLang];
+    document.getElementById('modal-desc').textContent = room.desc[currentLang];
     
     const featuresList = document.getElementById('modal-features');
-    featuresList.innerHTML = room.features.map(f => `<li>${f}</li>`).join('');
+    featuresList.innerHTML = room.features[currentLang].map(f => `<li>${f}</li>`).join('');
     
     currentRoomMedia = room.media || [];
     currentGalleryIndex = 0;
-    renderModalGallery();
+    renderModalGallery(room.title[currentLang]);
     
-    document.getElementById('room-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const mainVideo = document.getElementById('main-bg-video');
+    if(mainVideo) mainVideo.pause();
 
-    // تحديث رابط الصفحة (URL) ليحتوي على رقم الغرفة
+    document.getElementById('room-modal').classList.add('active');
     window.location.hash = 'room-' + roomId;
 }
 
-function renderModalGallery() {
+function renderModalGallery(roomTitleAlt) {
     const track = document.getElementById('gallery-track');
     const thumbs = document.getElementById('modal-thumbnails');
 
-    track.innerHTML = currentRoomMedia.map(m => {
+    track.innerHTML = currentRoomMedia.map((m, idx) => {
         let tag = m.type === 'video' 
-            ? `<video src="${m.src}" controls playsinline></video>` 
-            : `<img src="${m.src}">`;
-        return `<div class="slide-item">${tag}</div>`;
+            ? `<video src="${m.src}" autoplay muted loop playsinline style="pointer-events:none;"></video>` 
+            : `<img src="${m.src}" alt="${roomTitleAlt}">`;
+        return `<div class="slide-item ${idx === 0 ? 'active' : ''}" onclick="openLightbox(currentRoomMedia, ${idx})">${tag}</div>`;
     }).join('');
 
     thumbs.innerHTML = currentRoomMedia.map((m, idx) => {
         let inner = m.type === 'video' 
             ? `<i class="fa-solid fa-play video-icon-overlay"></i><video src="${m.src}"></video>` 
-            : `<img src="${m.src}">`;
+            : `<img src="${m.src}" alt="Thumbnail">`;
         return `<div class="thumbnail-item ${idx === 0 ? 'active' : ''}" onclick="goToImage(${idx})">${inner}</div>`;
     }).join('');
 
@@ -106,17 +247,9 @@ function renderModalGallery() {
 }
 
 function updateGalleryPosition() {
-    const track = document.getElementById('gallery-track');
-    if(!track) return;
-    track.style.transform = `translateX(-${currentGalleryIndex * 100}%)`;
-
-    const slides = track.querySelectorAll('.slide-item');
+    const slides = document.querySelectorAll('#gallery-track .slide-item');
     slides.forEach((slide, idx) => {
-        const vid = slide.querySelector('video');
-        if(vid) {
-            if(idx === currentGalleryIndex) vid.play();
-            else vid.pause();
-        }
+        slide.classList.toggle('active', idx === currentGalleryIndex);
     });
 
     const thumbs = document.querySelectorAll('.thumbnail-item');
@@ -141,24 +274,24 @@ function goToImage(index) {
 
 function closeRoomModal() {
     document.getElementById('room-modal').classList.remove('active');
-    const track = document.getElementById('gallery-track');
-    if(track) {
-        track.querySelectorAll('video').forEach(vid => vid.pause());
-    }
+    document.body.style.overflow = 'auto';
     
-    // إزالة رقم الغرفة من الرابط عند إغلاق النافذة المنبثقة ليرجع للرابط الأصلي
+    const mainVideo = document.getElementById('main-bg-video');
+    if(mainVideo) mainVideo.play();
+
     history.pushState("", document.title, window.location.pathname + window.location.search);
 }
 
+// ================= سلايدر "من نحن" =================
 function initAboutSlider() {
     const track = document.getElementById('about-track');
-    if (!track || !siteSettings.aboutMedia || siteSettings.aboutMedia.length === 0) return;
+    if (!track || typeof siteSettings === 'undefined' || !siteSettings.aboutMedia) return;
 
-    track.innerHTML = siteSettings.aboutMedia.map((media) => {
+    track.innerHTML = siteSettings.aboutMedia.map((media, idx) => {
         let tag = media.type === 'video'
-            ? `<video src="${media.src}" autoplay muted loop playsinline></video>`
-            : `<img src="${media.src}" alt="من نحن">`;
-        return `<div class="slide-item">${tag}</div>`;
+            ? `<video src="${media.src}" autoplay muted loop playsinline style="pointer-events:none;"></video>`
+            : `<img src="${media.src}" alt="About Resort">`;
+        return `<div class="slide-item ${idx === 0 ? 'active' : ''}" onclick="openLightbox(siteSettings.aboutMedia, ${idx})">${tag}</div>`;
     }).join('');
 
     updateAboutPosition();
@@ -166,18 +299,21 @@ function initAboutSlider() {
 }
 
 function updateAboutPosition() {
-    const track = document.getElementById('about-track');
-    if(!track) return;
-    track.style.transform = `translateX(-${currentAboutIndex * 100}%)`;
+    const slides = document.querySelectorAll('#about-track .slide-item');
+    slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === currentAboutIndex);
+    });
 }
 
 function nextAboutSlide() {
+    if(!siteSettings || !siteSettings.aboutMedia) return;
     currentAboutIndex = (currentAboutIndex === siteSettings.aboutMedia.length - 1) ? 0 : currentAboutIndex + 1;
     updateAboutPosition();
     resetAboutInterval(); 
 }
 
 function prevAboutSlide() {
+    if(!siteSettings || !siteSettings.aboutMedia) return;
     currentAboutIndex = (currentAboutIndex === 0) ? siteSettings.aboutMedia.length - 1 : currentAboutIndex - 1;
     updateAboutPosition();
     resetAboutInterval();
@@ -188,62 +324,33 @@ function resetAboutInterval() {
     aboutSlideInterval = setInterval(() => { nextAboutSlide(); }, 4000); 
 }
 
+// ================= تهيئة الصفحة =================
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 2. قراءة الرابط (URL) للتحقق مما إذا كان المستخدم داخل غرفة قبل التحميل
+    applyLanguage();
+
     const hash = window.location.hash;
     if (hash.startsWith('#room-')) {
         const roomId = hash.replace('#room-', '');
-        // البحث عن الغرفة لمعرفة الطابق الخاص بها وتفعيله أولاً
-        const targetRoom = roomsData.find(r => r.roomId === roomId);
-        if (targetRoom) {
-            activeFloorId = targetRoom.floorId;
+        if(roomsData) {
+            const targetRoom = roomsData.find(r => r.roomId === roomId);
+            if (targetRoom) activeFloorId = targetRoom.floorId;
         }
     }
 
-    if (typeof siteSettings !== 'undefined') {
-        const logoElement = document.getElementById('brand-logo');
-        if (logoElement) {
-            logoElement.src = siteSettings.logo;
-            logoElement.style.height = siteSettings.logoHeight; 
-        }
+    initAboutSlider();
 
-        const titleElement = document.getElementById('hero-title-text');
-        if (titleElement) titleElement.textContent = siteSettings.heroTitle;
-
-        const subtitleElement = document.getElementById('hero-subtitle-text');
-        if (subtitleElement) subtitleElement.textContent = siteSettings.heroSubtitle;
-
-        const mainVideo = document.getElementById('main-bg-video');
-        if(mainVideo && siteSettings.heroVideo) {
-            mainVideo.innerHTML = `<source src="${siteSettings.heroVideo}" type="video/mp4">`;
-            mainVideo.load();
-        }
-
-        const bookingButtons = document.querySelectorAll('.btn-book, .btn-book-direct');
-        bookingButtons.forEach(btn => {
-            btn.onclick = () => window.open(siteSettings.bookingLink, '_blank');
-        });
-
-        // تفعيل بيانات الفوتر
-        document.getElementById('phone-text').textContent = siteSettings.phoneNumber;
-        document.getElementById('phone-link').href = `tel:${siteSettings.phoneNumber}`;
-        document.getElementById('whatsapp-link').href = siteSettings.whatsappLink;
-        document.getElementById('instagram-link').href = siteSettings.instagramLink;
-        document.getElementById('tiktok-link').href = siteSettings.tiktokLink;
-        document.getElementById('location-text').textContent = siteSettings.locationText;
-        document.getElementById('map-link').href = siteSettings.mapLink;
-        document.getElementById('copyright-text').textContent = siteSettings.copyrightText;
-
-        initAboutSlider();
-    }
-
-    renderFloors();
-    renderRooms();
-
-    // 3. فتح الغرفة تلقائياً إذا كان الرابط يحتوي على رقم الغرفة (عند عمل Refresh)
     if (hash.startsWith('#room-')) {
         const roomId = hash.replace('#room-', '');
         openRoomModal(roomId);
     }
+    
+    // تفعيل السحب (Swipe) لملء الشاشة
+    const lightbox = document.getElementById('lightbox');
+    lightbox.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    lightbox.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleLightboxSwipe();
+    });
 });

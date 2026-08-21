@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوسيل للشقق المخدومة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="لوسيل للشقق المخدومة - وجهتك المثلى في أجمل مصايف المملكة.">
+    <meta property="og:title" content="لوسيل للشقق المخدومة">
+    <meta property="og:description" content="أجمل إطلالة في جبال الطائف وأرقى الشقق المخدومة.">
+    <title>لوسيل للشقق المخدومة | Lucille Serviced Apartments</title>
+    
+    <!-- خطوط جوجل للغة العربية والإنجليزية -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- زر العودة للأعلى -->
+    <button id="scrollTopBtn" aria-label="العودة للأعلى"><i class="fa-solid fa-arrow-up"></i></button>
+
     <!-- قسم الفيديو والهيدر -->
     <header class="hero-section">
         <video autoplay muted loop playsinline class="bg-video" id="main-bg-video"></video>
         <div class="top-nav">
-            <button class="btn-book">احجز الآن 📅</button>
+            <button id="lang-toggle" class="btn-lang" data-i18n="langBtn">English</button>
             <div class="logo">
-                <img id="brand-logo" src="" alt="لوسيل للشقق المخدومة">
+                <img id="brand-logo" src="" alt="Lucille Logo">
             </div>
         </div>
         <div class="hero-content">
             <p id="hero-subtitle-text"></p>
             <h1 id="hero-title-text"></h1>
-            <div class="scroll-down">↓</div>
+            <div class="scroll-down" data-i18n="scrollDown">↓</div>
         </div>
     </header>
 
@@ -32,25 +40,24 @@
             <div class="about-images">
                 <div class="media-slider">
                     <div class="slider-track" id="about-track"></div>
-                    <button class="slider-arrow right-arrow" onclick="prevAboutSlide()"><i class="fa-solid fa-chevron-right"></i></button>
-                    <button class="slider-arrow left-arrow" onclick="nextAboutSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-arrow right-arrow" aria-label="Next Slide" onclick="prevAboutSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="slider-arrow left-arrow" aria-label="Previous Slide" onclick="nextAboutSlide()"><i class="fa-solid fa-chevron-left"></i></button>
                 </div>
             </div>
             <div class="about-text">
-                <h2>في أعالي<br>جبال الطائف</h2>
-                <p>حيث يلامس الضباب قمم الجبال وتتناثر نسمات الهواء العليل<br>أجمل وأشهر مصايف المملكة العربية السعودية<br>يقع مشروع لوسيل للشقق المخدومة</p>
-                <button class="btn-primary">تعرف على المزيد!</button>
+                <h2 data-i18n="aboutTitle">في أعالي<br>جبال الطائف</h2>
+                <p data-i18n="aboutDesc">حيث يلامس الضباب قمم الجبال...</p>
             </div>
         </div>
         <div class="about-features">
             <div class="feature-item">
-                <i class="fa-solid fa-key"></i><span>ضيافة<br>فاخرة</span>
+                <i class="fa-solid fa-key"></i><span data-i18n="feature1">ضيافة<br>فاخرة</span>
             </div>
             <div class="feature-item">
-                <i class="fa-solid fa-umbrella-beach"></i><span>طبيعة ساحرة &<br>تنوع في الخدمات</span>
+                <i class="fa-solid fa-umbrella-beach"></i><span data-i18n="feature2">طبيعة ساحرة &<br>تنوع في الخدمات</span>
             </div>
             <div class="feature-item">
-                <i class="fa-solid fa-spa"></i><span>التركيز على<br>راحة ضيوفنا</span>
+                <i class="fa-solid fa-spa"></i><span data-i18n="feature3">التركيز على<br>راحة ضيوفنا</span>
             </div>
         </div>
     </section>
@@ -61,8 +68,8 @@
         <div class="rooms-container-box">
             <div class="floor-header">
                 <div class="floor-title-info">
-                    <h2 id="current-floor-title">الطابق الثاني - المدرجات المتوسطية</h2>
-                    <p id="current-floor-count">2 غرف متوفرة</p>
+                    <h2 id="current-floor-title"></h2>
+                    <p id="current-floor-count"></p>
                 </div>
             </div>
             <div class="rooms-white-bg">
@@ -73,24 +80,19 @@
 
     <!-- الفوتر (تواصل معنا) -->
     <footer class="contact-footer">
-        <h3>تواصل معنا</h3>
+        <h3 data-i18n="contactUs">تواصل معنا</h3>
         <div class="footer-container">
-            <!-- اليمين: السوشيال ميديا -->
             <div class="social-icons">
-                <a href="#" id="tiktok-link" target="_blank" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="#" id="instagram-link" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" id="whatsapp-link" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" id="tiktok-link" target="_blank" class="social-link" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" id="instagram-link" target="_blank" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" id="whatsapp-link" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
-
-            <!-- الوسط: رقم التليفون -->
             <div class="phone-center">
                 <a href="#" id="phone-link" class="phone-btn">
                     <span id="phone-text" dir="ltr"></span>
                     <i class="fa-solid fa-phone"></i>
                 </a>
             </div>
-
-            <!-- اليسار: الموقع الجغرافي -->
             <div class="location-group">
                 <div class="location-text-container">
                     <span id="location-text"></span>
@@ -98,49 +100,55 @@
                 </div>
                 <a href="#" id="map-link" target="_blank" class="circle-map-btn">
                     <i class="fa-solid fa-map-location-dot"></i>
-                    <span>للوصول الى</span>
+                    <span data-i18n="reachUs">للوصول الى</span>
                 </a>
             </div>
         </div>
         <p class="copyright" id="copyright-text"></p>
     </footer>
 
-    <!-- النافذة المنبثقة (صفحة الغرفة) -->
+    <!-- النافذة المنبثقة للغرفة -->
     <div id="room-modal" class="room-modal">
-        <button class="floating-back-btn" onclick="closeRoomModal()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
+        <button class="floating-back-btn" onclick="closeRoomModal()"><i class="fa-solid fa-arrow-right" id="back-icon"></i> <span data-i18n="back">رجوع</span></button>
         <div class="modal-content">
             <div class="modal-details">
-                <span class="room-badge" id="modal-room-id">غرفة 302</span>
-                <p class="modal-floor-name" id="modal-floor-name">الطابق 03 - الطابق الثاني</p>
-                <h2 id="modal-title" class="modal-room-title">غرفة كوستال التنفيذية</h2>
-                <div class="modal-price-box">
-                    <h3 id="modal-price">night / $360</h3>
-                    <p>ليلة واحدة مشمولة</p>
-                </div>
-                <button class="btn-book-direct">احجز هذه الغرفة الآن عبر الموقع المباشر ↗</button>
+                <span class="room-badge" id="modal-room-id"></span>
+                <p class="modal-floor-name" id="modal-floor-name"></p>
+                <h2 id="modal-title" class="modal-room-title"></h2>
+                
+                <button class="btn-book-direct" id="btn-book-direct" data-i18n="bookModal">طلب حجز هذه الوحدة ↗</button>
+                
                 <div class="room-stats-grid">
-                    <div class="stat-item"><span>المساحة الإجمالية</span><strong id="modal-area">M² 45</strong></div>
-                    <div class="stat-item"><span>سعة النزلاء</span><strong id="modal-capacity">2 نزلاء 👥</strong></div>
-                    <div class="stat-item"><span>نوع السرير</span><strong id="modal-bed">سرير ملكي كينغ 🛏️</strong></div>
-                    <div class="stat-item"><span>نوع الإطلالة</span><strong id="modal-view">إطلالة على البحر 🌅</strong></div>
+                    <div class="stat-item"><span data-i18n="totalArea">المساحة الإجمالية</span><strong id="modal-area"></strong></div>
+                    <div class="stat-item"><span data-i18n="capacity">سعة النزلاء</span><strong id="modal-capacity"></strong></div>
+                    <div class="stat-item"><span data-i18n="bedType">توزيع الأسرة</span><strong id="modal-bed"></strong></div>
+                    <div class="stat-item"><span data-i18n="viewType">نوع الإطلالة والمميزات</span><strong id="modal-view"></strong></div>
                 </div>
                 <div class="modal-desc-section">
-                    <h3>عن الغرفة والتصميم المعماري</h3>
-                    <p id="modal-desc">الوصف هنا</p>
-                    <h3>المميزات والتجهيزات الفاخرة المشمولة</h3>
+                    <h3 data-i18n="aboutRoomTitle">عن الوحدة والتصميم</h3>
+                    <p id="modal-desc"></p>
+                    <h3 data-i18n="featuresTitle">المميزات والتجهيزات المشمولة</h3>
                     <ul id="modal-features" class="modal-features-list"></ul>
                 </div>
             </div>
             <div class="modal-gallery">
                 <div class="media-slider modal-slider-height">
                     <div class="slider-track" id="gallery-track"></div>
-                    <button class="slider-arrow right-arrow" onclick="prevImage()"><i class="fa-solid fa-chevron-right"></i></button>
-                    <button class="slider-arrow left-arrow" onclick="nextImage()"><i class="fa-solid fa-chevron-left"></i></button>
-                    <div class="gallery-counter-badge" id="gallery-counter">1 / 3</div>
+                    <button class="slider-arrow right-arrow" aria-label="Next Image" onclick="prevImage()"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="slider-arrow left-arrow" aria-label="Previous Image" onclick="nextImage()"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="gallery-counter-badge" id="gallery-counter"></div>
                 </div>
                 <div class="thumbnails-container" id="modal-thumbnails"></div>
             </div>
         </div>
+    </div>
+
+    <!-- نافذة ملء الشاشة للصور والفيديوهات (Lightbox) -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lightbox-prev" onclick="prevLightbox()"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lightbox-next" onclick="nextLightbox()"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="lightbox-content" id="lightbox-content"></div>
     </div>
 
     <script src="data.js"></script>
