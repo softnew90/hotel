@@ -76,7 +76,14 @@ const siteSettings = {
 
     aboutMedia: [
         { type: "image", src: "assets/3.jpeg" },
-        { type: "image", src: "assets/4.jpeg" } 
+        { type: "image", src: "assets/4.jpeg" },
+        { type: "image", src: "assets/5.jpeg" },
+        { type: "image", src: "assets/6.jpeg" },
+        { type: "image", src: "assets/7.jpeg" },
+        { type: "image", src: "assets/8.jpeg" },
+        { type: "image", src: "assets/9.jpeg" },
+        { type: "image", src: "assets/10.jpeg" },
+        { type: "image", src: "assets/11.jpeg" } 
     ]
 };
 
@@ -317,7 +324,11 @@ const roomsData = [
             en: ["Balcony", "Large living room", "2 Bathrooms", "Equipped kitchen", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/404.1.jpeg" },
+            { type: "image", src: "assets/404.2.jpeg" },
+            { type: "image", src: "assets/404.3.jpeg" },
+            { type: "image", src: "assets/404.4.jpeg" },
+            { type: "image", src: "assets/404.5.jpeg" }
         ]
     },
 
@@ -339,7 +350,11 @@ const roomsData = [
             en: ["Private BBQ Terrace", "Balcony", "Large living room", "Large equipped kitchen", "2 Bathrooms", "Washing machine", "Microwave & Fridge"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/501.1.jpeg" },
+            { type: "image", src: "assets/501.2.jpeg" },
+            { type: "image", src: "assets/501.3.jpeg" },
+            { type: "image", src: "assets/501.4.jpeg" },
+            { type: "image", src: "assets/501.5.jpeg" }
         ]
     },
     {
@@ -359,7 +374,10 @@ const roomsData = [
             en: ["Balcony", "Large living room", "Large equipped kitchen", "2 Bathrooms", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/502.1.jpeg" },
+            { type: "image", src: "assets/502.2.jpeg" },
+            { type: "image", src: "assets/502.3.jpeg" },
+            { type: "image", src: "assets/502.4.jpeg" }
         ]
     },
     {
@@ -399,7 +417,10 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/504.1.jpeg" },
+            { type: "image", src: "assets/504.2.jpeg" },
+            { type: "image", src: "assets/504.3.jpeg" },
+            { type: "image", src: "assets/504.4.jpeg" }
         ]
     },
     {
@@ -439,7 +460,9 @@ const roomsData = [
             en: ["Medium living room", "Large equipped kitchen", "1 Bathroom", "Washing machine", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/506.1.jpeg" },
+            { type: "image", src: "assets/506.2.jpeg" },
+            { type: "image", src: "assets/506.3.jpeg" }
         ]
     },
 
@@ -481,7 +504,10 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/602.1.jpeg" },
+            { type: "image", src: "assets/602.2.jpeg" },
+            { type: "image", src: "assets/602.3.jpeg" },
+            { type: "image", src: "assets/602.4.jpeg" }
         ]
     },
     {
@@ -501,7 +527,10 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/603.1.jpeg" },
+            { type: "image", src: "assets/603.2.jpeg" },
+            { type: "image", src: "assets/603.3.jpeg" },
+            { type: "image", src: "assets/603.4.jpeg" }
         ]
     },
     {
@@ -521,7 +550,11 @@ const roomsData = [
             en: ["Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table", "Phone directory"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/604.1.jpeg" },
+            { type: "image", src: "assets/604.2.jpeg" },
+            { type: "image", src: "assets/604.3.jpeg" },
+            { type: "image", src: "assets/604.4.jpeg" },
+            { type: "image", src: "assets/604.5.jpeg" }
         ]
     },
     {
@@ -541,7 +574,10 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/605.1.jpeg" },
+            { type: "image", src: "assets/605.2.jpeg" },
+            { type: "image", src: "assets/605.3.jpeg" },
+            { type: "image", src: "assets/605.4.jpeg" }
         ]
     },
     {
@@ -561,7 +597,14 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/606.1.jpeg" },
+            { type: "image", src: "assets/606.2.jpeg" },
+            { type: "image", src: "assets/606.3.jpeg" },
+            { type: "image", src: "assets/606.4.jpeg" },
+            { type: "image", src: "assets/606.5.jpeg" },
+            { type: "image", src: "assets/606.6.jpeg" },
+            { type: "image", src: "assets/606.7.jpeg" },
+            { type: "image", src: "assets/606.8.jpeg" }
         ]
     },
 
@@ -583,7 +626,10 @@ const roomsData = [
             en: ["Balcony", "Living room", "Equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/701.1.jpeg" },
+            { type: "image", src: "assets/701.2.jpeg" },
+            { type: "image", src: "assets/701.3.jpeg" },
+            { type: "image", src: "assets/701.4.jpeg" }
         ]
     },
     {
@@ -603,7 +649,10 @@ const roomsData = [
             en: ["High privacy balcony", "Medium living room", "Equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/702.1.jpeg" },
+            { type: "image", src: "assets/702.2.jpeg" },
+            { type: "image", src: "assets/702.3.jpeg" },
+            { type: "image", src: "assets/702.4.jpeg" }
         ]
     }
 ];
