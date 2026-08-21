@@ -1,4 +1,4 @@
-// إدارة اللغة
+// إدارة اللغة وحالة النوافذ المنبثقة (لزر الرجوع)
 let currentLang = localStorage.getItem('siteLang') || 'ar';
 let activeFloorId = ""; 
 let currentRoomMedia = [];
@@ -6,7 +6,10 @@ let currentGalleryIndex = 0;
 let aboutSlideInterval;
 let currentAboutIndex = 0;
 
-// إعدادات النافذة المنبثقة للصور (Lightbox)
+// متغيرات حالة النوافذ (لمنع التعارض مع زر الرجوع)
+let isModalOpen = false;
+let currentOpenRoomId = null;
+let isLightboxOpen = false;
 let lightboxMedia = [];
 let lightboxIndex = 0;
 let touchStartX = 0;
@@ -151,8 +154,13 @@ function openLightbox(mediaArray, startIndex) {
     lightboxMedia = mediaArray;
     lightboxIndex = startIndex;
     renderLightbox();
+    
     document.getElementById('lightbox').classList.add('active');
     document.body.style.overflow = 'hidden'; 
+    isLightboxOpen = true;
+    
+    // إضافة خطوة في سجل المتصفح لدعم زر الرجوع
+    window.history.pushState({ lightbox: true }, "");
 }
 
 function renderLightbox() {
@@ -175,13 +183,17 @@ function prevLightbox() {
     renderLightbox();
 }
 
-function closeLightbox() {
+function closeLightboxUI() {
     document.getElementById('lightbox').classList.remove('active');
     document.getElementById('lightbox-content').innerHTML = '';
-    // إعادة التمرير للصفحة فقط إذا لم تكن نافذة الغرفة مفتوحة
-    if (!document.getElementById('room-modal').classList.contains('active')) {
-        document.body.style.overflow = 'auto';
-    }
+    // إرجاع السكرول فقط لو نافذة الغرفة مش مفتوحة
+    if (!isModalOpen) document.body.style.overflow = 'auto';
+    isLightboxOpen = false;
+}
+
+function closeLightbox() {
+    closeLightboxUI();
+    window.history.back(); // يحذف خطوة السجل الخاصة بالـ Lightbox
 }
 
 function handleLightboxSwipe() {
@@ -195,7 +207,7 @@ function handleLightboxSwipe() {
 }
 
 // ================= نافذة الغرف المنبثقة والسلايدر =================
-function openRoomModal(roomId) {
+function openRoomModal(roomId, pushToHistory = true) {
     const room = roomsData.find(r => r.roomId === roomId);
     if(!room) return;
     const floor = floorsData.find(f => f.id === room.floorId);
@@ -222,7 +234,14 @@ function openRoomModal(roomId) {
     if(mainVideo) mainVideo.pause();
 
     document.getElementById('room-modal').classList.add('active');
-    window.location.hash = 'room-' + roomId;
+    
+    isModalOpen = true;
+    currentOpenRoomId = roomId;
+
+    // إضافة خطوة للسجل إذا لم تكن موجودة بالفعل (لدعم زر الرجوع)
+    if (pushToHistory) {
+        window.history.pushState({ modal: true, roomId: roomId }, "", '#room-' + roomId);
+    }
 }
 
 function renderModalGallery(roomTitleAlt) {
@@ -272,14 +291,31 @@ function goToImage(index) {
     updateGalleryPosition();
 }
 
-function closeRoomModal() {
+function closeRoomModalUI() {
     document.getElementById('room-modal').classList.remove('active');
     document.body.style.overflow = 'auto';
     
     const mainVideo = document.getElementById('main-bg-video');
     if(mainVideo) mainVideo.play();
 
-    history.pushState("", document.title, window.location.pathname + window.location.search);
+    const track = document.getElementById('gallery-track');
+    if(track) {
+        track.querySelectorAll('video').forEach(vid => vid.pause());
+    }
+    
+    isModalOpen = false;
+    currentOpenRoomId = null;
+}
+
+function closeRoomModal() {
+    closeRoomModalUI();
+    // إذا فتحنا الغرفة من داخل الموقع، نرجع للخلف خطوة لمسح الرابط
+    // أما إذا كان الزائر قد دخل على رابط الغرفة مباشرة، نستبدل الرابط للرئيسية بدون إخراجه من الموقع
+    if (window.history.state && window.history.state.modal && !window.history.state.firstLoad) {
+        window.history.back();
+    } else {
+        window.history.pushState(null, "", window.location.pathname + window.location.search);
+    }
 }
 
 // ================= سلايدر "من نحن" =================
@@ -324,10 +360,32 @@ function resetAboutInterval() {
     aboutSlideInterval = setInterval(() => { nextAboutSlide(); }, 4000); 
 }
 
+// ================= مراقبة زر الرجوع (Hardware Back Button) =================
+window.addEventListener('popstate', (event) => {
+    // 1. لو الـ Lightbox مفتوح، اقفله الأول وما تعملش حاجة تانية
+    if (isLightboxOpen) {
+        closeLightboxUI();
+        return; 
+    }
+
+    // 2. لو مفيش Lightbox، نتحقق من الغرفة
+    const hash = window.location.hash;
+    if (hash.startsWith('#room-')) {
+        const roomId = hash.replace('#room-', '');
+        if (!isModalOpen || currentOpenRoomId !== roomId) {
+            openRoomModal(roomId, false);
+        }
+    } else {
+        if (isModalOpen) {
+            closeRoomModalUI();
+        }
+    }
+});
+
 // ================= تهيئة الصفحة =================
 document.addEventListener('DOMContentLoaded', () => {
-    applyLanguage();
-
+    
+    // استخراج رقم الغرفة لو المستخدم داخل على رابط مباشر للغرفة
     const hash = window.location.hash;
     if (hash.startsWith('#room-')) {
         const roomId = hash.replace('#room-', '');
@@ -337,11 +395,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    applyLanguage();
     initAboutSlider();
 
+    // لو رابط مباشر، نفتح الغرفة فوراً
     if (hash.startsWith('#room-')) {
         const roomId = hash.replace('#room-', '');
-        openRoomModal(roomId);
+        // نعلم هذه الخطوة في السجل كأول زيارة (First Load)
+        window.history.replaceState({ firstLoad: true, modal: true, roomId: roomId }, "", hash);
+        openRoomModal(roomId, false);
     }
     
     // تفعيل السحب (Swipe) لملء الشاشة
