@@ -1,12 +1,11 @@
-// إدارة اللغة وحالة النوافذ المنبثقة (لزر الرجوع)
+// إدارة اللغة وحالة النوافذ المنبثقة
 let currentLang = localStorage.getItem('siteLang') || 'ar';
 let activeFloorId = ""; 
 let currentRoomMedia = [];
 let currentGalleryIndex = 0;
-let aboutSlideInterval;
 let currentAboutIndex = 0;
 
-// متغيرات حالة النوافذ (لمنع التعارض مع زر الرجوع)
+// متغيرات حالة النوافذ
 let isModalOpen = false;
 let currentOpenRoomId = null;
 let isLightboxOpen = false;
@@ -15,7 +14,7 @@ let lightboxIndex = 0;
 let touchStartX = 0;
 let touchEndX = 0;
 
-// تطبيق اللغة على الواجهة
+// تطبيق اللغة
 function applyLanguage() {
     document.documentElement.lang = currentLang;
     document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
@@ -47,7 +46,7 @@ document.getElementById('lang-toggle').addEventListener('click', () => {
     applyLanguage();
 });
 
-// زر العودة للأعلى
+// العودة للأعلى
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
@@ -149,7 +148,7 @@ function selectFloor(floorId) {
     renderRooms();
 }
 
-// ================= دوال الـ Lightbox (ملء الشاشة) =================
+// ================= دوال الـ Lightbox =================
 function openLightbox(mediaArray, startIndex) {
     lightboxMedia = mediaArray;
     lightboxIndex = startIndex;
@@ -159,7 +158,6 @@ function openLightbox(mediaArray, startIndex) {
     document.body.style.overflow = 'hidden'; 
     isLightboxOpen = true;
     
-    // إضافة خطوة في سجل المتصفح لدعم زر الرجوع
     window.history.pushState({ lightbox: true }, "");
 }
 
@@ -186,14 +184,13 @@ function prevLightbox() {
 function closeLightboxUI() {
     document.getElementById('lightbox').classList.remove('active');
     document.getElementById('lightbox-content').innerHTML = '';
-    // إرجاع السكرول فقط لو نافذة الغرفة مش مفتوحة
     if (!isModalOpen) document.body.style.overflow = 'auto';
     isLightboxOpen = false;
 }
 
 function closeLightbox() {
     closeLightboxUI();
-    window.history.back(); // يحذف خطوة السجل الخاصة بالـ Lightbox
+    window.history.back(); 
 }
 
 function handleLightboxSwipe() {
@@ -238,7 +235,6 @@ function openRoomModal(roomId, pushToHistory = true) {
     isModalOpen = true;
     currentOpenRoomId = roomId;
 
-    // إضافة خطوة للسجل إذا لم تكن موجودة بالفعل (لدعم زر الرجوع)
     if (pushToHistory) {
         window.history.pushState({ modal: true, roomId: roomId }, "", '#room-' + roomId);
     }
@@ -271,7 +267,7 @@ function updateGalleryPosition() {
         slide.classList.toggle('active', idx === currentGalleryIndex);
     });
 
-    const thumbs = document.querySelectorAll('.thumbnail-item');
+    const thumbs = document.querySelectorAll('#modal-thumbnails .thumbnail-item');
     thumbs.forEach((t, idx) => t.classList.toggle('active', idx === currentGalleryIndex));
     document.getElementById('gallery-counter').textContent = `${currentGalleryIndex + 1} / ${currentRoomMedia.length}`;
 }
@@ -309,8 +305,6 @@ function closeRoomModalUI() {
 
 function closeRoomModal() {
     closeRoomModalUI();
-    // إذا فتحنا الغرفة من داخل الموقع، نرجع للخلف خطوة لمسح الرابط
-    // أما إذا كان الزائر قد دخل على رابط الغرفة مباشرة، نستبدل الرابط للرئيسية بدون إخراجه من الموقع
     if (window.history.state && window.history.state.modal && !window.history.state.firstLoad) {
         window.history.back();
     } else {
@@ -318,9 +312,10 @@ function closeRoomModal() {
     }
 }
 
-// ================= سلايدر "من نحن" =================
+// ================= سلايدر "من نحن" (تحكم يدوي فقط) =================
 function initAboutSlider() {
     const track = document.getElementById('about-track');
+    const thumbs = document.getElementById('about-thumbnails');
     if (!track || typeof siteSettings === 'undefined' || !siteSettings.aboutMedia) return;
 
     track.innerHTML = siteSettings.aboutMedia.map((media, idx) => {
@@ -330,8 +325,16 @@ function initAboutSlider() {
         return `<div class="slide-item ${idx === 0 ? 'active' : ''}" onclick="openLightbox(siteSettings.aboutMedia, ${idx})">${tag}</div>`;
     }).join('');
 
+    if (thumbs) {
+        thumbs.innerHTML = siteSettings.aboutMedia.map((media, idx) => {
+            let inner = media.type === 'video' 
+                ? `<i class="fa-solid fa-play video-icon-overlay"></i><video src="${media.src}"></video>` 
+                : `<img src="${media.src}" alt="Thumbnail">`;
+            return `<div class="thumbnail-item ${idx === 0 ? 'active' : ''}" onclick="goToAboutImage(${idx})">${inner}</div>`;
+        }).join('');
+    }
+
     updateAboutPosition();
-    resetAboutInterval();
 }
 
 function updateAboutPosition() {
@@ -339,36 +342,40 @@ function updateAboutPosition() {
     slides.forEach((slide, idx) => {
         slide.classList.toggle('active', idx === currentAboutIndex);
     });
+
+    const thumbs = document.querySelectorAll('#about-thumbnails .thumbnail-item');
+    thumbs.forEach((t, idx) => t.classList.toggle('active', idx === currentAboutIndex));
+
+    const counter = document.getElementById('about-counter');
+    if(counter) {
+        counter.textContent = `${currentAboutIndex + 1} / ${siteSettings.aboutMedia.length}`;
+    }
 }
 
 function nextAboutSlide() {
     if(!siteSettings || !siteSettings.aboutMedia) return;
     currentAboutIndex = (currentAboutIndex === siteSettings.aboutMedia.length - 1) ? 0 : currentAboutIndex + 1;
     updateAboutPosition();
-    resetAboutInterval(); 
 }
 
 function prevAboutSlide() {
     if(!siteSettings || !siteSettings.aboutMedia) return;
     currentAboutIndex = (currentAboutIndex === 0) ? siteSettings.aboutMedia.length - 1 : currentAboutIndex - 1;
     updateAboutPosition();
-    resetAboutInterval();
 }
 
-function resetAboutInterval() {
-    clearInterval(aboutSlideInterval);
-    aboutSlideInterval = setInterval(() => { nextAboutSlide(); }, 4000); 
+function goToAboutImage(index) {
+    currentAboutIndex = index;
+    updateAboutPosition();
 }
 
-// ================= مراقبة زر الرجوع (Hardware Back Button) =================
+// ================= مراقبة زر الرجوع =================
 window.addEventListener('popstate', (event) => {
-    // 1. لو الـ Lightbox مفتوح، اقفله الأول وما تعملش حاجة تانية
     if (isLightboxOpen) {
         closeLightboxUI();
         return; 
     }
 
-    // 2. لو مفيش Lightbox، نتحقق من الغرفة
     const hash = window.location.hash;
     if (hash.startsWith('#room-')) {
         const roomId = hash.replace('#room-', '');
@@ -384,8 +391,6 @@ window.addEventListener('popstate', (event) => {
 
 // ================= تهيئة الصفحة =================
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // استخراج رقم الغرفة لو المستخدم داخل على رابط مباشر للغرفة
     const hash = window.location.hash;
     if (hash.startsWith('#room-')) {
         const roomId = hash.replace('#room-', '');
@@ -398,15 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
     applyLanguage();
     initAboutSlider();
 
-    // لو رابط مباشر، نفتح الغرفة فوراً
     if (hash.startsWith('#room-')) {
         const roomId = hash.replace('#room-', '');
-        // نعلم هذه الخطوة في السجل كأول زيارة (First Load)
         window.history.replaceState({ firstLoad: true, modal: true, roomId: roomId }, "", hash);
         openRoomModal(roomId, false);
     }
     
-    // تفعيل السحب (Swipe) لملء الشاشة
     const lightbox = document.getElementById('lightbox');
     lightbox.addEventListener('touchstart', e => {
         touchStartX = e.changedTouches[0].screenX;
