@@ -63,7 +63,7 @@ const siteSettings = {
     heroMedia: {
         type: "image", // جرب تغييرها إلى "image" أو "localVideo"
         src: "assets/2.jpg", // ضع ID اليوتيوب، أو رابط الصورة/الفيديو حسب النوع المختار
-        fallbackImage: "https://lusailresortsa.com/assets/img/hero/home3/bg.jpg" // الصورة التي تظهر قبل التحميل
+        fallbackImage: "" // الصورة التي تظهر قبل التحميل
     },
     
     phoneNumber: "0509187294",
