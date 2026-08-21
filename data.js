@@ -63,7 +63,7 @@ const siteSettings = {
     heroMedia: {
         type: "image", // جرب تغييرها إلى "image" أو "localVideo"
         src: "assets/2.jpg", // ضع ID اليوتيوب، أو رابط الصورة/الفيديو حسب النوع المختار
-        fallbackImage: "" // الصورة التي تظهر قبل التحميل
+        fallbackImage: "https://lusailresortsa.com/assets/img/hero/home3/bg.jpg" // الصورة التي تظهر قبل التحميل
     },
     
     phoneNumber: "0509187294",
@@ -75,8 +75,8 @@ const siteSettings = {
     copyrightText: { ar: "© 2026 لوسيل للشقق المخدومة. جميع الحقوق محفوظة.", en: "© 2026 Lucille Serviced Apartments. All rights reserved." },
 
     aboutMedia: [
-        { type: "image", src: "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=600&auto=format&fit=crop" },
-        { type: "localVideo", src: "https://res.cloudinary.com/hpgg1hvh/video/upload/v1787252639/pop.mp4" } 
+        { type: "image", src: "assets/3.jpeg" },
+        { type: "image", src: "assets/4.jpeg" } 
     ]
 };
 
