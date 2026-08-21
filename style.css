@@ -22,17 +22,41 @@ body[dir="ltr"] { font-family: 'Poppins', sans-serif; }
     height: 100%; 
     z-index: -1; 
     overflow: hidden; 
-    filter: brightness(0.5); 
-    pointer-events: none; 
     background-color: #111;
     background-size: cover; 
     background-position: center; 
 }
-.youtube-bg { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: none; }
 
-.top-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); color: var(--white); }
+/* طبقة تظليل وحماية لمنع التفاعل مع الفيديو */
+.youtube-bg-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.5); /* درجة التظليل */
+    z-index: 1;
+}
+
+.youtube-bg { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    width: 100vw; 
+    height: 56.25vw; 
+    min-height: 100vh; 
+    min-width: 177.77vh; 
+    /* التكبير لـ 1.15 لإخفاء حواف يوتيوب وأيقونات التشغيل */
+    transform: translate(-50%, -50%) scale(1.15); 
+    border: none; 
+    pointer-events: none; /* يمنع الضغط أو إيقاف الفيديو */
+    z-index: 0;
+}
+
+.top-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); color: var(--white); z-index: 2; position: relative;}
 .logo img { object-fit: contain; transition: height 0.3s ease; }
-.hero-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--white); text-align: center; margin-top: -50px; }
+.hero-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--white); text-align: center; margin-top: -50px; z-index: 2; position: relative;}
 .hero-content h1 { font-size: 4rem; margin-top: 10px; }
 .scroll-down { width: 50px; height: 50px; border: 1px solid white; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-top: 30px; font-size: 1.5rem; }
 

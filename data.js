@@ -56,7 +56,9 @@ const siteSettings = {
     heroSubtitle: { ar: "وجهتك المثلى في أجمل مصايف المملكة", en: "Your ultimate destination in the Kingdom's finest resorts" },
     bookingLink: "https://www.booking.com", 
     
-    // تم وضع ID فيديو اليوتيوب هنا
+    // الصورة البديلة الجديدة
+    heroImage: "https://lusailresortsa.com/assets/img/hero/home3/bg.jpg", 
+    // معرف يوتيوب
     heroYoutubeId: "QjWOcP6sWWM", 
     
     phoneNumber: "0509187294",

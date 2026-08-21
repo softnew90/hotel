@@ -74,17 +74,17 @@ function renderHeaderAndFooter() {
     const subtitleElement = document.getElementById('hero-subtitle-text');
     if (subtitleElement) subtitleElement.textContent = siteSettings.heroSubtitle[currentLang];
 
-    // تفعيل الصورة البديلة (Fallback) وفيديو اليوتيوب
+    // وضع الصورة البديلة وفيديو اليوتيوب
     const youtubeWrapper = document.querySelector('.youtube-bg-wrapper');
     const youtubeIframe = document.getElementById('main-bg-youtube');
     
+    // الصورة البديلة (Fallback)
     if (youtubeWrapper && siteSettings.heroImage) {
         youtubeWrapper.style.backgroundImage = `url('${siteSettings.heroImage}')`;
     }
 
     if (youtubeIframe && siteSettings.heroYoutubeId) {
         const vidId = siteSettings.heroYoutubeId;
-        // وضع رابط الإمبد مع إضافة Origin لتجنب حظر التضمين قدر الإمكان
         const origin = window.location.origin !== "null" ? window.location.origin : "https://lusailresortsa.com";
         youtubeIframe.src = `https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&loop=1&playlist=${vidId}&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&fs=0&modestbranding=1&iv_load_policy=3&origin=${origin}`;
     }
