@@ -55,8 +55,9 @@ const siteSettings = {
     heroTitle: { ar: "مرحبا بكم في لوسيل", en: "Welcome to Lucille" }, 
     heroSubtitle: { ar: "وجهتك المثلى في أجمل مصايف المملكة", en: "Your ultimate destination in the Kingdom's finest resorts" },
     bookingLink: "https://www.booking.com", 
-    heroVideo: "https://res.cloudinary.com/hpgg1hvh/video/upload/v1787252639/pop.mp4", 
-    heroPoster: "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=1920&auto=format&fit=crop",
+    
+    // تم وضع ID فيديو اليوتيوب هنا
+    heroYoutubeId: "QjWOcP6sWWM", 
     
     phoneNumber: "0509187294",
     whatsappLink: "https://wa.me/966509187294",

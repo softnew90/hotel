@@ -11,9 +11,25 @@ body { background-color: var(--bg-color); color: var(--navy-blue); overflow-x: h
 body[dir="rtl"] { font-family: 'Tajawal', sans-serif; }
 body[dir="ltr"] { font-family: 'Poppins', sans-serif; }
 
-/* ================= الهيدر ================= */
+/* ================= الهيدر وفيديو يوتيوب ================= */
 .hero-section { height: 80vh; position: relative; display: flex; flex-direction: column; overflow: hidden; background-color: #111; z-index: 1; }
-.bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; filter: brightness(0.5); }
+
+.youtube-bg-wrapper { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: -1; 
+    overflow: hidden; 
+    filter: brightness(0.5); 
+    pointer-events: none; 
+    background-color: #111;
+    background-size: cover; 
+    background-position: center; 
+}
+.youtube-bg { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); border: none; }
+
 .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); color: var(--white); }
 .logo img { object-fit: contain; transition: height 0.3s ease; }
 .hero-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--white); text-align: center; margin-top: -50px; }
@@ -153,7 +169,6 @@ body[dir="ltr"] .modal-features-list li::before { content: "✔️ "; position: 
 .lightbox-next { right: 20px; }
 body[dir="rtl"] .lightbox-prev { right: 20px; left: auto; }
 body[dir="rtl"] .lightbox-next { left: 20px; right: auto; }
-
 
 /* ================= الموبايل ================= */
 @media (max-width: 768px) {

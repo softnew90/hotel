@@ -74,11 +74,19 @@ function renderHeaderAndFooter() {
     const subtitleElement = document.getElementById('hero-subtitle-text');
     if (subtitleElement) subtitleElement.textContent = siteSettings.heroSubtitle[currentLang];
 
-    const mainVideo = document.getElementById('main-bg-video');
-    if(mainVideo && siteSettings.heroVideo) {
-        mainVideo.innerHTML = `<source src="${siteSettings.heroVideo}" type="video/mp4">`;
-        if (siteSettings.heroPoster) mainVideo.setAttribute('poster', siteSettings.heroPoster);
-        mainVideo.load();
+    // تفعيل الصورة البديلة (Fallback) وفيديو اليوتيوب
+    const youtubeWrapper = document.querySelector('.youtube-bg-wrapper');
+    const youtubeIframe = document.getElementById('main-bg-youtube');
+    
+    if (youtubeWrapper && siteSettings.heroImage) {
+        youtubeWrapper.style.backgroundImage = `url('${siteSettings.heroImage}')`;
+    }
+
+    if (youtubeIframe && siteSettings.heroYoutubeId) {
+        const vidId = siteSettings.heroYoutubeId;
+        // وضع رابط الإمبد مع إضافة Origin لتجنب حظر التضمين قدر الإمكان
+        const origin = window.location.origin !== "null" ? window.location.origin : "https://lusailresortsa.com";
+        youtubeIframe.src = `https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&loop=1&playlist=${vidId}&controls=0&showinfo=0&rel=0&playsinline=1&disablekb=1&fs=0&modestbranding=1&iv_load_policy=3&origin=${origin}`;
     }
 
     const bookingBtn = document.getElementById('btn-book-direct');
@@ -227,8 +235,6 @@ function openRoomModal(roomId, pushToHistory = true) {
     renderModalGallery(room.title[currentLang]);
     
     document.body.style.overflow = 'hidden';
-    const mainVideo = document.getElementById('main-bg-video');
-    if(mainVideo) mainVideo.pause();
 
     document.getElementById('room-modal').classList.add('active');
     
@@ -290,9 +296,6 @@ function goToImage(index) {
 function closeRoomModalUI() {
     document.getElementById('room-modal').classList.remove('active');
     document.body.style.overflow = 'auto';
-    
-    const mainVideo = document.getElementById('main-bg-video');
-    if(mainVideo) mainVideo.play();
 
     const track = document.getElementById('gallery-track');
     if(track) {
@@ -312,7 +315,7 @@ function closeRoomModal() {
     }
 }
 
-// ================= سلايدر "من نحن" (تحكم يدوي فقط) =================
+// ================= سلايدر "من نحن" =================
 function initAboutSlider() {
     const track = document.getElementById('about-track');
     const thumbs = document.getElementById('about-thumbnails');

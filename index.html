@@ -20,7 +20,11 @@
 
     <!-- قسم الفيديو والهيدر -->
     <header class="hero-section">
-        <video autoplay muted loop playsinline class="bg-video" id="main-bg-video"></video>
+        <!-- حاوية فيديو اليوتيوب -->
+        <div class="youtube-bg-wrapper">
+            <iframe id="main-bg-youtube" class="youtube-bg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        
         <div class="top-nav">
             <button id="lang-toggle" class="btn-lang" data-i18n="langBtn">English</button>
             <div class="logo">
