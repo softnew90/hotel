@@ -83,7 +83,12 @@ const siteSettings = {
         { type: "image", src: "assets/8.jpeg" },
         { type: "image", src: "assets/9.jpeg" },
         { type: "image", src: "assets/10.jpeg" },
-        { type: "image", src: "assets/11.jpeg" } 
+        { type: "image", src: "assets/11.jpeg" },
+        { type: "image", src: "assets/12.jpeg" },
+        { type: "image", src: "assets/13.jpeg" },
+        { type: "image", src: "assets/14.jpeg" },
+        { type: "image", src: "assets/15.jpeg" },
+        { type: "image", src: "assets/16.jpeg" } 
     ]
 };
 
