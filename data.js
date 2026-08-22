@@ -122,10 +122,12 @@ const roomsData = [
             en: ["Private terrace", "Large living room", "Fully equipped large kitchen", "2 Bathrooms", "Microwave & Refrigerator", "Dining table", "Qibla direction"]
         },
         media: [
-            // مثال لإضافة فيديو يوتيوب للغرفة!
-            { type: "youtube", src: "QjWOcP6sWWM" },
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" },
-            { type: "localVideo", src: "https://res.cloudinary.com/hpgg1hvh/video/upload/v1787252639/pop.mp4" }
+            { type: "image", src: "assets/201.1.jpeg" },
+            { type: "image", src: "assets/201.2.jpeg" },
+            { type: "image", src: "assets/201.3.jpeg" },
+            { type: "image", src: "assets/201.4.jpeg" },
+            { type: "image", src: "assets/201.5.jpeg" },
+            { type: "image", src: "assets/201.6.jpeg" }
         ]
     },
     {
