@@ -140,7 +140,11 @@ const roomsData = [
             en: ["Private terrace", "Medium living room", "Equipped medium kitchen", "1 Bathroom", "Microwave & Refrigerator", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/202.1.jpeg" },
+            { type: "image", src: "assets/202.2.jpeg" },
+            { type: "image", src: "assets/202.3.jpeg" },
+            { type: "image", src: "assets/202.4.jpeg" },
+            { type: "image", src: "assets/202.5.jpeg" }
         ]
     },
     {
@@ -160,7 +164,11 @@ const roomsData = [
             en: ["Private terrace", "Medium living room", "Equipped medium kitchen", "1 Bathroom", "Microwave & Refrigerator", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/202.1.jpeg" },
+            { type: "image", src: "assets/202.2.jpeg" },
+            { type: "image", src: "assets/202.3.jpeg" },
+            { type: "image", src: "assets/202.4.jpeg" },
+            { type: "image", src: "assets/202.5.jpeg" }
         ]
     },
 
@@ -182,7 +190,12 @@ const roomsData = [
             en: ["Balcony & Private Terrace", "Medium living room", "2 Bathrooms", "Washing machine", "Equipped kitchen", "Microwave & Fridge"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/301.1.jpeg" },
+            { type: "image", src: "assets/301.2.jpeg" },
+            { type: "image", src: "assets/301.3.jpeg" },
+            { type: "image", src: "assets/301.4.jpeg" },
+            { type: "image", src: "assets/301.5.jpeg" },
+            { type: "image", src: "assets/301.6.jpeg" },
         ]
     },
     {
@@ -202,7 +215,11 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/302.1.jpeg" },
+            { type: "image", src: "assets/302.2.jpeg" },
+            { type: "image", src: "assets/302.3.jpeg" },
+            { type: "image", src: "assets/302.4.jpeg" },
+            { type: "image", src: "assets/302.5.jpeg" }
         ]
     },
     {
@@ -222,7 +239,13 @@ const roomsData = [
             en: ["Balcony", "2 Bathrooms", "Equipped kitchen", "Microwave & Fridge", "Dining table", "Qibla direction"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/303.1.jpeg" },
+            { type: "image", src: "assets/303.2.jpeg" },
+            { type: "image", src: "assets/303.3.jpeg" },
+            { type: "image", src: "assets/303.4.jpeg" },
+            { type: "image", src: "assets/303.5.jpeg" },
+            { type: "image", src: "assets/303.6.jpeg" },
+            { type: "image", src: "assets/303.7.jpeg" }
         ]
     },
     {
@@ -242,7 +265,10 @@ const roomsData = [
             en: ["Washing machine", "Equipped kitchen", "1 Bathroom", "Microwave & Refrigerator", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/304.1.jpeg" },
+            { type: "image", src: "assets/304.2.jpeg" },
+            { type: "image", src: "assets/304.3.jpeg" },
+            { type: "image", src: "assets/304.4.jpeg" }
         ]
     },
 
@@ -264,7 +290,13 @@ const roomsData = [
             en: ["Balcony & Private Terrace", "Extra Large Living Room", "Large Equipped Kitchen", "2 Bathrooms", "Microwave & Refrigerator", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/401.1.jpeg" },
+            { type: "image", src: "assets/401.2.jpeg" },
+            { type: "image", src: "assets/401.3.jpeg" },
+            { type: "image", src: "assets/401.4.jpeg" },
+            { type: "image", src: "assets/401.5.jpeg" },
+            { type: "image", src: "assets/401.6.jpeg" },
+            { type: "image", src: "assets/401.7.jpeg" }
         ]
     },
     {
@@ -284,7 +316,12 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Washing machine", "Equipped kitchen", "1 Bathroom", "Microwave & Fridge"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/402.1.jpeg" },
+            { type: "image", src: "assets/402.2.jpeg" },
+            { type: "image", src: "assets/402.3.jpeg" },
+            { type: "image", src: "assets/402.4.jpeg" },
+            { type: "image", src: "assets/402.5.jpeg" },
+            { type: "image", src: "assets/402.6.jpeg" }
         ]
     },
     {
@@ -304,7 +341,11 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Equipped medium kitchen", "2 Bathrooms", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/403.1.jpeg" },
+            { type: "image", src: "assets/403.2.jpeg" },
+            { type: "image", src: "assets/403.3.jpeg" },
+            { type: "image", src: "assets/403.4.jpeg" },
+            { type: "image", src: "assets/403.5.jpeg" }
         ]
     },
     {
@@ -440,7 +481,11 @@ const roomsData = [
             en: ["Balcony", "Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/505.1.jpeg" },
+            { type: "image", src: "assets/505.2.jpeg" },
+            { type: "image", src: "assets/505.3.jpeg" },
+            { type: "image", src: "assets/505.4.jpeg" },
+            { type: "image", src: "assets/505.5.jpeg" }
         ]
     },
     {
@@ -484,7 +529,11 @@ const roomsData = [
             en: ["Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table", "Phone directory"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/601.1.jpeg" },
+            { type: "image", src: "assets/601.2.jpeg" },
+            { type: "image", src: "assets/601.3.jpeg" },
+            { type: "image", src: "assets/601.4.jpeg" },
+            { type: "image", src: "assets/601.5.jpeg" }
         ]
     },
     {
@@ -561,8 +610,8 @@ const roomsData = [
         floorId: "floor6",
         roomId: "605",
         title: { ar: "غرفتين وصالة وحمام وبلكونة", en: "Two-Bedroom Suite with Balcony" },
-        capacity: { ar: "2 نزلاء", en: "2 Guests" },
-        bed: { ar: "1 سرير مزدوج", en: "1 Double Bed" },
+        capacity: { ar: "4 نزلاء", en: "4 Guests" },
+        bed: { ar: "1 سرير مزدوج + 2 سرير فردي", en: "1 Double Bed + 2 Single Beds" },
         area: "60 m²",
         view: { ar: "بلكونة", en: "Balcony" },
         desc: { 
@@ -576,6 +625,7 @@ const roomsData = [
         media: [
             { type: "image", src: "assets/605.1.jpeg" },
             { type: "image", src: "assets/605.2.jpeg" },
+            { type: "image", src: "assets/606.5.jpeg" },
             { type: "image", src: "assets/605.3.jpeg" },
             { type: "image", src: "assets/605.4.jpeg" }
         ]
@@ -601,7 +651,6 @@ const roomsData = [
             { type: "image", src: "assets/606.2.jpeg" },
             { type: "image", src: "assets/606.3.jpeg" },
             { type: "image", src: "assets/606.4.jpeg" },
-            { type: "image", src: "assets/606.5.jpeg" },
             { type: "image", src: "assets/606.6.jpeg" },
             { type: "image", src: "assets/606.7.jpeg" },
             { type: "image", src: "assets/606.8.jpeg" }
