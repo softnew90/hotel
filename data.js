@@ -203,6 +203,7 @@ const roomsData = [
             { type: "image", src: "assets/301.4.jpeg" },
             { type: "image", src: "assets/301.5.jpeg" },
             { type: "image", src: "assets/301.6.jpeg" },
+            { type: "image", src: "assets/301.jpeg" }
         ]
     },
     {
@@ -299,6 +300,7 @@ const roomsData = [
         media: [
             { type: "image", src: "assets/401.1.jpeg" },
             { type: "image", src: "assets/401.2.jpeg" },
+            { type: "image", src: "assets/401.jpeg" },
             { type: "image", src: "assets/401.3.jpeg" },
             { type: "image", src: "assets/401.4.jpeg" },
             { type: "image", src: "assets/401.5.jpeg" },
@@ -373,6 +375,7 @@ const roomsData = [
         },
         media: [
             { type: "image", src: "assets/404.1.jpeg" },
+            { type: "image", src: "assets/500.jpeg" },
             { type: "image", src: "assets/404.2.jpeg" },
             { type: "image", src: "assets/404.3.jpeg" },
             { type: "image", src: "assets/404.4.jpeg" },
@@ -423,6 +426,7 @@ const roomsData = [
         },
         media: [
             { type: "image", src: "assets/502.1.jpeg" },
+            { type: "image", src: "assets/500.jpeg" },
             { type: "image", src: "assets/502.2.jpeg" },
             { type: "image", src: "assets/502.3.jpeg" },
             { type: "image", src: "assets/502.4.jpeg" }
@@ -445,7 +449,10 @@ const roomsData = [
             en: ["Medium living room", "Large equipped kitchen", "1 Bathroom", "Washing machine", "Microwave & Fridge", "Dining table"]
         },
         media: [
-            { type: "image", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" }
+            { type: "image", src: "assets/503.1.jpeg" },
+            { type: "image", src: "assets/503.2.jpeg" },
+            { type: "image", src: "assets/503.3.jpeg" },
+            { type: "image", src: "assets/503.4.jpeg" }
         ]
     },
     {
@@ -536,7 +543,6 @@ const roomsData = [
             en: ["Medium living room", "Large equipped kitchen", "1 Bathroom", "Microwave & Fridge", "Dining table", "Phone directory"]
         },
         media: [
-            { type: "image", src: "assets/601.1.jpeg" },
             { type: "image", src: "assets/601.2.jpeg" },
             { type: "image", src: "assets/601.3.jpeg" },
             { type: "image", src: "assets/601.4.jpeg" },
